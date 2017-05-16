@@ -10,5 +10,5 @@ ADD crontab /etc/cron.d/hello-cron
 # Give execution rights on the cron job and create the log file to tail in the next layer
 RUN chmod 0644 /etc/cron.d/hello-cron && touch /var/log/cron.log
 
-# Run the command on container startup
-CMD echo "srarting" && echo "continuing" && (cron) && echo "tailing..."  && tail -f /var/log/cron.log
+# Run the command on container startup see this post as to why we modify the file before tailing it http://stackoverflow.com/a/43807880/329496
+CMD echo "starting" && (cron) && echo "tailing..." && : > /var/log/cron.log && tail -f /var/log/cron.log
